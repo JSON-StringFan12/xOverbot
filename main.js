@@ -5,21 +5,15 @@ let date = new Date()
 
 const config = require('./config.json');
 
-const fs = require('fs');
-
 let commands = require('./commands').commands
 let util = require('./utilities')
 
 const request = require('request');
 const channelId = 'UCV0FN2UnOJl-CfCfYoFVC9g';
 
-
-
-
-
 bot.on('message', message => {
     let newDate = new Date()
-    if (date.getDay() != newDate.getDay()) {
+    if (date.getDay() !== newDate.getDay()) {
         subCount()
         chart.chart.data.datasets.data.splice(0, 1)
         chart.chart.data.datasets.data[6] = subs
@@ -30,7 +24,7 @@ bot.on('message', message => {
         for (let i = 0; i < commands.length; i++) {
             console.log(i);
             for (let j = 0; j < commands[i][0].length; j++) {
-                if (message.content.substr(0, commands[i][0][j].length + config.prefix.length) == config.prefix + commands[i][0][j]) {
+                if (message.content.substr(0, commands[i][0][j].length + config.prefix.length) === config.prefix + commands[i][0][j]) {
                     let baseEmbed = new discord.MessageEmbed()
                     baseEmbed
                         .setColor('#ffe4f2')
