@@ -1,7 +1,7 @@
 const config = require('./config.json')
 let commands = require('./commands')
 
-const channelId = 'UCV0FN2UnOJl-CfCfYoFVC9g'
+const channelId = config.channelId
 
 const subsUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${config.googleToken}`;
 const videosUrl = `https://www.googleapis.com/youtube/v3/search?key=${config.googleToken}&channelId=${channelId}&part=snippet,id&order=date&maxResults=1`
@@ -11,7 +11,7 @@ const request = require('request');
 let videoStats = []
 
 let data = {
-    lastSubs: 287,
+    lastSubs: 182,
     subs: 0,
     subGain: 0,
     viewCount: 12938,

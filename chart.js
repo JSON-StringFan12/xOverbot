@@ -1,13 +1,15 @@
+const config = require('./config.json');
+
 let chart = {
     "chart": {
         "type": "line",
         "data": {
             "labels": [],
             "datasets": [{
-                "label": "xOvernight's Subscriber Count for the Last 7 Days",
+                "label": `${config.youtuber}'s Subscriber Count for the Last 7 Days`,
                 "backgroundColor": 'rgba(255, 99, 132, 0.25)',
                 "borderColor": 'rgb(255, 99, 132)',
-                "data": [205, 216, 239, 251, 276, 309, 276]
+                "data": [427, 427, 437, 440, 460, 462, 464]
             }]
         },
         "options": {
@@ -33,7 +35,7 @@ let chart = {
                 }]
             },
             "plugins": {
-                "backgroundImageUrl": 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__340.jpg',
+                "backgroundImageUrl": config.chartBackground,
             }
         }
     },

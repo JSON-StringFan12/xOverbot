@@ -8,7 +8,7 @@ let main = require('./main');
 let util = require('./utilities')
 let chart = require('./chart').chart;
 
-const colors = ['#44008b', '#9f45b0', '#e54ed0', '#ffe4f2', '#00076f']
+const colors = ['#00076f', '#44008b', '#9f45b0', '#e54ed0', '#ffe4f2']
 
 
 const commands = [
@@ -19,7 +19,7 @@ const commands = [
         function(message, baseEmbed) {
             let embed = new discord.MessageEmbed();
             embed = baseEmbed;
-            embed.setThumbnail('https://yt3.ggpht.com/g3C2S6YUOgCe-TePr55KlSNwR6HFVRSvYQ0Iy4Xy8xx_ASaPa_LLD7MWUNawY9M581xZErHydg=s176-c-k-c0x00ffffff-no-rj')
+            embed.setThumbnail(config.profileURL)
             embed.setTitle('Commands List:');
             for (let i = 0; i < commands.length; i++) {
                 embed.addField(commands[i][1], `(${config.prefix}${commands[i][0][0]} or ${config.prefix}${commands[i][0][1]}) ${commands[i][2]}`);
@@ -48,17 +48,17 @@ const commands = [
     [
         ['subscribers', 'subs'],
         'Subscribers:',
-        'Checks the amount of subscribers xOvernight has.',
+        `Checks the amount of subscribers ${config.youtuber} has.`,
         function(message, baseEmbed) {
             let embed = new discord.MessageEmbed();
             embed = baseEmbed;
             embed.setTitle('Subscribers:');
             util.subCount();
-            let basicMessage = `xOvernight currently has ${util.data.subs} subscribers.\nHe has gained ${util.data.subGain} subscribers since this command was last used.`
+            let basicMessage = `${config.youtuber} currently has ${util.data.subs} subscribers.\nHe has gained ${util.data.subGain} subscribers since this command was last used.`
             embed.setDescription(basicMessage + '\nGathering Graph...')
             for (let i = -5; i <= 1; i++) {
-                if (date.getDay() + i + 7 > 0) {
-                    chart.chart.data.labels[i + 5] = `${JSON.stringify(date.getMonth() + 1)}/${JSON.stringify(date.getDay() + i + 17)}/${JSON.stringify(date.getFullYear())}`
+                if (date.getDay() + i + 14 > 0) {
+                    chart.chart.data.labels[i + 5] = `${JSON.stringify(date.getMonth() + 1)}/${JSON.stringify(date.getDay() + i + 24)}/${JSON.stringify(date.getFullYear())}`
                 } else {
                     chart.chart.data.labels[i + 5] = `${JSON.stringify(date.getMonth())}/${JSON.stringify(34 + i)}/${JSON.stringify(date.getFullYear())}`
                 }
@@ -98,14 +98,14 @@ const commands = [
     [
         ['viewcount', 'views'],
         'View Count:',
-        "Shows xOvernight's video views and how many videos he has.",
+        `Shows ${config.youtuber}'s video views and how many videos he has.`,
         async function(message, baseEmbed) {
             let embed = new discord.MessageEmbed();
             embed = baseEmbed;
-            embed.setThumbnail('https://yt3.ggpht.com/g3C2S6YUOgCe-TePr55KlSNwR6HFVRSvYQ0Iy4Xy8xx_ASaPa_LLD7MWUNawY9M581xZErHydg=s176-c-k-c0x00ffffff-no-rj')
+            embed.setThumbnail(config.profileURL)
             embed.setTitle('Video Statistics:');
             await util.subCount();
-            embed.setDescription(`xOvernight has ${util.data.viewCount} views spread across ${util.data.videoCount} videos.`)
+            embed.setDescription(`${config.youtuber} has ${util.data.viewCount} views spread across ${util.data.videoCount} videos.`)
             let newMessage = message.channel.send(embed).then(newMessage => {
                 let i = 0;
                 let j = 0
@@ -130,18 +130,19 @@ const commands = [
     [
         ['channelgrowth', 'growth'],
         'Channel Growth:',
-        "Shows xOvernight's estimated subscriber count growth in certain time periods.",
+        `Shows ${config.youtuber}'s estimated subscriber count growth in certain time periods.`,
         function(message, baseEmbed) {
             let embed = new discord.MessageEmbed();
             embed = baseEmbed;
-            embed.setThumbnail('https://yt3.ggpht.com/g3C2S6YUOgCe-TePr55KlSNwR6HFVRSvYQ0Iy4Xy8xx_ASaPa_LLD7MWUNawY9M581xZErHydg=s176-c-k-c0x00ffffff-no-rj')
+            embed.setThumbnail(config.profileURL)
             embed.setTitle('Estimated Sub Growth:');
             util.subCount();
             let week = (parseInt(util.data.subs) - chart.chart.data.datasets[0].data[0]) + parseInt(util.data.subs);
-            let month = Math.floor((week - parseInt(util.data.subs)) / 7 * 30)
-            let year = (week - parseInt(util.data.subs)) * 52
+            console.log("yes ", (parseInt(week) - parseInt(util.data.subs)) * 4)
+            let month = parseInt(((parseInt(week) - parseInt(util.data.subs)) * 4) + parseInt(util.data.subs))
+            let year = parseInt(((parseInt(week) - parseInt(util.data.subs)) * 52) + parseInt(util.data.subs))
 
-            embed.setDescription('xOvernight will (probably) grow to:');
+            embed.setDescription(`${config.youtuber} will (probably) grow to:`);
             embed.addField(`${week} subscribers`, 'In one week.');
             embed.addField(`${month} subscribers`, 'In one month.');
             embed.addField(`${year} subscribers`, 'In one year.');
@@ -169,13 +170,13 @@ const commands = [
     [
         ['latestvideo', 'latest'],
         'Latest Video:',
-        "Shows xOvernight's most recent video that he uploaded.",
+        `Shows ${config.youtuber}'s most recent video that he uploaded.`,
         function(message, baseEmbed) {
             let embed = new discord.MessageEmbed();
             embed = baseEmbed;
             util.videos()
             console.log(util.newestVideo.title)
-            embed.setTitle(`xOvernight's most recent video: ${util.newestVideo.title}`);
+            embed.setTitle(`${config.youtuber}'s most recent video: ${util.newestVideo.title}`);
             embed.setURL(`https://www.youtube.com/watch?v=${util.newestVideo.id}`);
             embed.setDescription(`**Description:** ${util.newestVideo.description}`);
             embed.setImage(util.newestVideo.thumbnail)
